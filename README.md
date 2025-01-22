@@ -511,6 +511,8 @@ require("conform").setup({
     end,
     -- You can use tables-as-keys to define multiple file types for the same formatter
     [{ "bash", "csh", "ksh", "sh", "zsh" }] = { "beautysh" },
+    -- Simple keys always take precedence over tables-as-keys
+    bash = { "shfmt" },
     -- Use the "*" filetype to run formatters on all filetypes.
     ["*"] = { "codespell" },
     -- Use the "_" filetype to run formatters on filetypes that don't
@@ -624,7 +626,7 @@ require("conform").formatters.my_formatter = {
 | Param                 | Type                                                                                                             | Desc                                                                                                                                                                      |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | opts                  | `nil\|conform.setupOpts`                                                                                         |                                                                                                                                                                           |
-| >formatters_by_ft     | `nil\|table<string\|string[], conform.FiletypeFormatter>`                                                        | Map of filetype to formatters. It supports tables as keys (only works within the setup function).                                                                         |
+| >formatters_by_ft     | `nil\|table<string\|string[], conform.FiletypeFormatter>`                                                        | Map of filetype to formatters. It supports tables as keys (only works within the setup function); simple keys override tables-as-keys                                     |
 | >format_on_save       | `nil\|conform.FormatOpts\|fun(bufnr: integer): nil\|conform.FormatOpts`                                          | If this is set, Conform will run the formatter on save. It will pass the table to conform.format(). This can also be a function that returns the table.                   |
 | >default_format_opts  | `nil\|conform.DefaultFormatOpts`                                                                                 | The default options to use when calling conform.format()                                                                                                                  |
 | >>timeout_ms          | `nil\|integer`                                                                                                   | Time in milliseconds to block for formatting. Defaults to 1000. No effect if async = true.                                                                                |
